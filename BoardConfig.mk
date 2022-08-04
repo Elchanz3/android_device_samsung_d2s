@@ -53,6 +53,7 @@ TW_EXCLUDE_SUPERSU := true
 TW_EXTRA_LANGUAGES := true
 TW_USE_NEW_MINADBD := true
 TW_EXCLUDE_TWRPAPP := true
+LZMA_RAMDISK_TARGETS := recovery
 
 # Release related flags
 PLATFORM_VERSION := 12
