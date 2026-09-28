@@ -1,0 +1,4 @@
+#!/bin/sh
+
+: "${CROSS_COMPILE:?CROSS_COMPILE must point to the kernel toolchain}"
+exec "${CROSS_COMPILE}readelf" "$@"

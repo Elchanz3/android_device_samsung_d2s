@@ -60,7 +60,34 @@ BOARD_RAMDISK_USE_LZMA := true
 # Kernel
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/kernel
+BOARD_BOOT_HEADER_VERSION := 1
+TARGET_KERNEL_SOURCE := kernel/samsung/universal9820
+TARGET_KERNEL_CONFIG := exynos9820-d2s_defconfig
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CLANG_VERSION := r383902
+BOARD_KERNEL_IMAGE_NAME := Image
+NEED_KERNEL_MODULE_RECOVERY := true
+
+# Samsung's kernel uses Android 11 platform macros independently of recovery.
+TARGET_KERNEL_ADDITIONAL_FLAGS := PLATFORM_VERSION=11 ANDROID_MAJOR_VERSION=r HOSTCFLAGS="-fcommon -fuse-ld=lld"
+# Resolve embedded firmware paths when Samsung's kernel is built out of tree.
+TARGET_KERNEL_ADDITIONAL_FLAGS += KAFLAGS="-Wa,-I$(abspath $(TARGET_KERNEL_SOURCE))"
+# Provide the cross-toolchain readelf required by Samsung's FIPS scripts.
+D2S_KERNEL_TOOL_PATH := $(abspath $(DEVICE_PATH))/kernel-tools
+D2S_KERNEL_TOOL_PATH := $(D2S_KERNEL_TOOL_PATH):$(abspath prebuilts/clang/host/linux-x86/clang-$(TARGET_KERNEL_CLANG_VERSION)/bin)
+D2S_KERNEL_TOOL_PATH := $(D2S_KERNEL_TOOL_PATH):$(abspath prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin)
+D2S_KERNEL_TOOL_PATH := $(D2S_KERNEL_TOOL_PATH):$(abspath prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin)
+D2S_KERNEL_TOOL_PATH := $(D2S_KERNEL_TOOL_PATH):$(abspath prebuilts/tools-lineage/linux-x86/bin)
+TARGET_KERNEL_ADDITIONAL_FLAGS += PATH="$(D2S_KERNEL_TOOL_PATH):$(shell echo $$PATH)"
+
+# Always build the kernel and DTBO from source.
+override TARGET_PREBUILT_KERNEL :=
+override TARGET_FORCE_PREBUILT_KERNEL :=
+override OF_FORCE_PREBUILT_KERNEL := 0
 BOARD_INCLUDE_RECOVERY_DTBO := true
-BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/dtbo
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --header_version 1
+BOARD_KERNEL_SEPARATED_DTBO := true
+override BOARD_PREBUILT_DTBOIMAGE = $(TARGET_OUT_INTERMEDIATES)/DTBO_OBJ/arch/$(TARGET_KERNEL_ARCH)/boot/dtbo.img
+override BOARD_PREBUILT_RECOVERY_DTBOIMAGE :=
+BOARD_DTBO_CFG := $(DEVICE_PATH)/dtbo.cfg
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --header_version $(BOARD_BOOT_HEADER_VERSION)

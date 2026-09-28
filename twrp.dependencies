@@ -1,0 +1,8 @@
+[
+  {
+    "repository": "Elchanz3/android_kernel_samsung_universal9820",
+    "target_path": "kernel/samsung/universal9820",
+    "branch": "android-9.0",
+    "remote": "github"
+  }
+]
