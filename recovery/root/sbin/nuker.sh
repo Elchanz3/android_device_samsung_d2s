@@ -1,4 +1,4 @@
-#!/sbin/sh
+#!/system/bin/sh
 # Copyright 2019-2022 © corsicanu
 # Licensed under CC BY-NC-SA 4.0
 # https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
@@ -24,8 +24,7 @@ for i in /vendor/etc/fstab.exynos*; do
 done
 
 # Step 2 - Nuke manifest lines for the given combo of trash services
-combo=(vaultkeeper proca wsm)
-for service in ${combo[@]}; do
+for service in vaultkeeper proca wsm; do
     for i in /vendor/etc/vintf/manifest.xml \
     /vendor/etc/vintf/manifest/vaultkeeper_manifest.xml \
     /vendor/etc/vintf/manifest/wsm_manifest.xml; do
@@ -62,4 +61,3 @@ umount /system_root
 umount /vendor
 
 exit 0
-

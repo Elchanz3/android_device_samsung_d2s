@@ -9,10 +9,9 @@ on boot
 on property:sys.usb.ffs.ready=1
     start nuker
 
-service nuker /sbin/sh /sbin/nuker.sh
+service nuker /system/bin/sh /sbin/nuker.sh
     user root
     group root
     oneshot
     disabled
     seclabel u:r:recovery:s0
-

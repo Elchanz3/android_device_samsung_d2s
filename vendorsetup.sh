@@ -14,5 +14,13 @@
 # limitations under the License.
 #
 
-add_lunch_combo omni_d2s-eng
-
+export FOX_BUILD_DEVICE=d2s
+export OF_MAINTAINER=Elchanz3
+export OF_SCREEN_H=3040
+export OF_STATUS_H=142
+export OF_STATUS_INDENT_LEFT=48
+export OF_STATUS_INDENT_RIGHT=48
+export OF_USE_LZMA_COMPRESSION=1
+export OF_PATCH_AVB20=1
+export OF_QUICK_BACKUP_LIST="/boot;/recovery;/data;/efs"
+export OF_FORCE_PREBUILT_KERNEL=0

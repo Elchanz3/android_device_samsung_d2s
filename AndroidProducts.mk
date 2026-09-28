@@ -14,5 +14,8 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/omni_d2s.mk
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/twrp_d2s.mk
 
+COMMON_LUNCH_CHOICES := \
+    twrp_d2s-eng \
+    twrp_d2s-userdebug
