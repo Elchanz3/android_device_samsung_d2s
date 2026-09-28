@@ -16,10 +16,12 @@
 
 export FOX_BUILD_DEVICE=d2s
 export OF_MAINTAINER=Elchanz3
-export OF_SCREEN_H=3040
-export OF_STATUS_H=142
+# Use 1080-wide theme coordinates for the 1440x3040 framebuffer.
+export OF_SCREEN_H=2280
+export OF_STATUS_H=106
 export OF_STATUS_INDENT_LEFT=48
 export OF_STATUS_INDENT_RIGHT=48
+export OF_FL_PATH1=/dev/fox_flashlight
 export OF_USE_LZMA_COMPRESSION=1
 export OF_PATCH_AVB20=1
 export OF_QUICK_BACKUP_LIST="/boot;/recovery;/data;/efs"
